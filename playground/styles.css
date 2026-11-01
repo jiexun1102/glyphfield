@@ -1,0 +1,323 @@
+:root {
+  --bg: #0e0d12;
+  --surface: #17161d;
+  --surface-2: #211f29;
+  --line: #2c2a35;
+  --fg: #f4f2f7;
+  --muted: #a39fb0;
+  --accent: #ff5c8a;
+  --panel-w: 340px;
+  color-scheme: dark;
+}
+:root[data-theme='light'] {
+  --bg: #f7f7f9;
+  --surface: #ffffff;
+  --surface-2: #efeef3;
+  --line: #e2e0e8;
+  --fg: #141218;
+  --muted: #6b6676;
+  --accent: #d81e5b;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: Geist, ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+.muted {
+  color: var(--muted);
+}
+
+.app {
+  min-height: 100svh;
+}
+
+/* the demo: the field fills it, with sample content on top */
+.stage {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  overflow: hidden;
+  color: var(--muted);
+}
+.stage > canvas {
+  z-index: -1;
+}
+.with-panel .stage {
+  margin-right: var(--panel-w);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem clamp(1rem, 4vw, 3rem);
+  color: var(--fg);
+}
+.logo {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.bar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+.pill {
+  display: inline-flex;
+  gap: 0.75rem;
+  align-items: center;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+.pill:hover {
+  border-color: var(--muted);
+}
+/* nobody installs from a phone, and the bar is too narrow for both pills */
+@media (max-width: 520px) {
+  .pill.install {
+    display: none;
+  }
+}
+.pill code {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+}
+
+.hero {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+  padding: clamp(3rem, 12vh, 8rem) clamp(1rem, 4vw, 3rem) 6rem;
+  max-width: 72rem;
+}
+.copy {
+  max-width: 36rem;
+}
+.eyebrow {
+  margin: 0 0 1rem;
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 0.875rem;
+}
+h1 {
+  margin: 0;
+  color: var(--fg);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  font-weight: 600;
+  text-wrap: balance;
+}
+.lede {
+  margin: 1.5rem 0 0;
+  font-size: 1.125rem;
+  line-height: 1.55;
+  max-width: 34rem;
+}
+
+/* the settings panel: a column on the right, a sheet from the bottom on small screens */
+.panel {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--panel-w);
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-left: 1px solid var(--line);
+  transform: translateX(calc(100% - 0px));
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.with-panel .panel {
+  transform: none;
+}
+.panel .panel-close {
+  margin: 1rem 1rem 0 auto;
+  border-radius: 999px;
+}
+.panel-body {
+  overflow-y: auto;
+  padding: 0.5rem 1.25rem 2rem;
+  display: none;
+}
+.with-panel .panel-body {
+  display: block;
+}
+@media (max-width: 760px) {
+  :root {
+    --panel-w: 100%;
+  }
+  .with-panel .stage {
+    margin-right: 0;
+  }
+  .panel {
+    top: auto;
+    width: 100%;
+    max-height: 60svh;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    transform: translateY(100%);
+  }
+}
+
+.section {
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.section:last-child {
+  border-bottom: 0;
+}
+.section h2 {
+  margin: 0 0 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.panel button {
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  border-radius: 0.6rem;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+.panel button:hover {
+  border-color: var(--muted);
+}
+.chips,
+.row,
+.colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.row + .row {
+  margin-top: 0.5rem;
+}
+.row input {
+  flex: 1;
+  min-width: 0;
+}
+.panel .chip.on {
+  background: var(--fg);
+  color: var(--bg);
+  border-color: var(--fg);
+}
+.panel input:not([type]),
+.panel textarea,
+.panel select {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  border-radius: 0.6rem;
+  padding: 0.45rem 0.6rem;
+  font-size: 0.875rem;
+}
+.row input:not([type]) {
+  width: auto;
+}
+.panel textarea {
+  resize: vertical;
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 0.8125rem;
+}
+.field {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+}
+.field:first-child {
+  margin-top: 0;
+}
+.field.toggle {
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+.field.range span {
+  display: flex;
+  justify-content: space-between;
+}
+.field output {
+  color: var(--muted);
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 0.8125rem;
+}
+.field input[type='range'] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+.field input[type='checkbox'] {
+  accent-color: var(--accent);
+  width: 1.1rem;
+  height: 1.1rem;
+}
+.colors {
+  margin-bottom: 0.25rem;
+}
+.swatch {
+  position: relative;
+}
+.swatch input[type='color'] {
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 0.6rem;
+  background: none;
+  cursor: pointer;
+}
+.panel .swatch .x {
+  position: absolute;
+  top: -0.4rem;
+  right: -0.4rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  padding: 0;
+  line-height: 1;
+  border-radius: 999px;
+  font-size: 0.75rem;
+}
+.panel .add {
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+}
+.code {
+  margin: 0 0 0.75rem;
+  padding: 0.85rem;
+  border-radius: 0.6rem;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  overflow-x: auto;
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 0.75rem;
+  line-height: 1.55;
+}
