@@ -3,6 +3,8 @@
 An interactive glyph-matrix backdrop. It follows the pointer, decodes words where it rests, and keeps out of the way
 of your content.
 
+**[Try it in the playground →](https://glyphfield-virid.vercel.app)**
+
 - **Knows what's on top of it.** Glyphs dim behind your headline and never decode behind images, so the effect never
   fights your content. Mark elements with `data-glyph-quiet` and `data-glyph-cover`.
 - **Scriptable.** Decode any word from code, or hide a message that appears when someone keeps their cursor still.
